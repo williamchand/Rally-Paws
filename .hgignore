@@ -1,0 +1,16 @@
+syntax: glob
+__pycache__/
+*.py[cod]
+.venv/
+pytest_cache/
+*.db
+backend/.env
+.env
+node_modules/
+*.tsbuildinfo
+rally-web/dist/
+rally-web/.npm-cache/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

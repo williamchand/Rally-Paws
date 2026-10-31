@@ -1,0 +1,13 @@
+.git/
+.hg/
+.sl/
+.eden/
+.agents/
+.muse/
+rally-web/node_modules/
+rally-web/dist/
+backend/.venv/
+backend/__pycache__/
+backend/rally/__pycache__/
+backend/.env
+*.pyc

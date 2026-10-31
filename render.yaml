@@ -1,0 +1,26 @@
+# Rally Render Blueprint: one Docker web service.
+# The image builds the React PWA and serves it same-origin from FastAPI,
+# so no CORS or cross-service wiring is needed.
+services:
+  - type: web
+    name: rally
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: MODEL_BASE_URL
+        value: https://api.meta.ai/v1
+      - key: MODEL_ID
+        value: muse-spark-1.3
+      - key: MODEL_API_KEY
+        sync: false # Prompted once in the Render Dashboard; chat answers 503 without it
+      - key: CONFIRM_SECRET
+        generateValue: true
+      - key: CHAT_RATE_PER_MIN
+        value: 120 # demo day: judges share one egress IP, keep headroom
+      - key: REVENUECAT_SECRET_KEY
+        sync: false # Optional: enables real entitlement checks; demo billing flow without it
+      - key: REVENUECAT_ENTITLEMENT
+        value: plus

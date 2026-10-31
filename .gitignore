@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+pytest_cache/
+*.db
+
+# Secrets (never commit)
+backend/.env
+.env
+
+# Node / web
+node_modules/
+*.tsbuildinfo
+rally-web/dist/
+rally-web/.npm-cache/
+
+# Playwright demo output
+demo/node_modules/
+demo/videos/
+demo/shots/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,14 @@
+{
+  "name": "Rally",
+  "short_name": "Rally",
+  "description": "Chat with your activity coach, log sports, and grow a companion.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1ec",
+  "theme_color": "#23281f",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
