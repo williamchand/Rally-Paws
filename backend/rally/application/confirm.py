@@ -26,8 +26,26 @@ def _unb64(text: str) -> bytes:
     return base64.urlsafe_b64decode(text.encode("ascii"))
 
 
+def _canon(value):
+    """Normalize numbers so JSON int/float round-trips compare equal.
+
+    JavaScript has only doubles: 60.0 comes back as 60. Normalizing
+    integral floats to int on both mint and verify keeps the HMAC stable
+    without weakening it (60.5 still differs from 60).
+    """
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, float):
+        return int(value) if value.is_integer() else value
+    if isinstance(value, dict):
+        return {k: _canon(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_canon(v) for v in value]
+    return value
+
+
 def canonical_draft(draft: dict) -> str:
-    return json.dumps(draft, sort_keys=True, separators=(",", ":"), default=str)
+    return json.dumps(_canon(draft), sort_keys=True, separators=(",", ":"), default=str)
 
 
 def mint_token(draft: dict, secret: str, now: float | None = None) -> str:

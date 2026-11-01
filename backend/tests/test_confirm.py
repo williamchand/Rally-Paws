@@ -22,6 +22,21 @@ def test_changed_draft_rejected():
         confirm.verify_token(edited, token, SECRET, now=1010.0)
 
 
+def test_js_number_roundtrip_ok():
+    """JS has only doubles: 60.0 minted comes back as 60 — must verify."""
+    token = confirm.mint_token(DRAFT, SECRET, now=1000.0)
+    as_js_sends_it = {"activity_id": "tennis", "duration_minutes": 60,
+                      "fields": {"format": "singles"}, "weight_kg": None}
+    confirm.verify_token(as_js_sends_it, token, SECRET, now=1010.0)
+
+
+def test_fractional_change_still_rejected():
+    token = confirm.mint_token(DRAFT, SECRET, now=1000.0)
+    edited = {**DRAFT, "duration_minutes": 60.5}
+    with pytest.raises(ConfirmationError, match="changed after review"):
+        confirm.verify_token(edited, token, SECRET, now=1010.0)
+
+
 def test_expired_rejected():
     token = confirm.mint_token(DRAFT, SECRET, now=1000.0)
     with pytest.raises(ConfirmationError, match="expired"):
